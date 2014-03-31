@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block title %} My Library - {{title}} {% endblock %}
+{% block content %}
+{{ super() }}
+
+<h2>Authors:</h2>
+    <ul>
+    {% for author in authors %}
+        <li><a href={{ url_for("library.view_author", author_id=author.id) }}>{{author.name}}</a></li>
+    {% endfor %}
+    </ul>
+
+{% endblock content %}

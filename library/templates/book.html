@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% import "helpers/forms.html" as forms %}
+{% block title %} My Library - {{title}} {% endblock %}
+{% block content %}
+{{ super() }}
+<h2>Book:</h2>
+<li>{{book.title}}</li>
+<h2>Authors:</h2>
+    {% for author in book.authors %}
+        <li><a href={{ url_for("library.view_author", author_id=author.id) }}>{{ author.name }}</a></li>
+    {% endfor %}
+
+{% if session.logged_in %}
+
+
+<form action={{ url_for("library.delete_book") }} method="POST">
+{{ forms.render(form) }}
+<p><input type="Submit" value="Delete Book"></p>
+</form>
+
+<form action={{ url_for("library.update_book_form", book_id=book.id) }} method="GET">
+<p><input type="Submit" value="Edit Book"></p>
+</form>
+
+{% endif %}
+
+{% endblock content %}

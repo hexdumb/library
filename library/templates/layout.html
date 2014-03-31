@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{% block title %}{% endblock %}</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+
+{% block head %} {% endblock %}
+
+</head>
+<body>
+<div class=page>
+
+<nav class=nav>
+<a href="{{ url_for('library.view_index') }}">Home</a>
+{% if session.auth %}
+<a href="/books">Books</a>
+<a href="/authors">Authors</a>
+<a href="/search">Search</a>
+{% endif %}
+{% if session.logged_in %}
+<a href="/add_book">Add Book</a>
+<a href="/add_author">Add Author</a>
+{% endif %}
+</nav>
+
+<div class=metanav>
+  {% if not ( session.logged_in or session.auth ) %}
+    <a href="{{ url_for('library.login') }}">log in</a>
+  {% else %}
+    <a href="{{ url_for('library.logout') }}">log out</a>
+  {% endif %}
+  </div>
+
+  {% for message in get_flashed_messages() %}
+    <div class=flash>{{ message }}</div>
+  {% endfor %}
+
+<section>
+{% block content %}
+<h1>{{ self.title() }}</h1>
+{% endblock %}
+</section>
+
+
+</div>
+</body>
+</html>

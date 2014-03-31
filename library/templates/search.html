@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block head %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='jquery-ui.css') }}">
+<script src="{{ url_for('static', filename='jquery-1.9.1.js') }}"></script>
+<script src="{{ url_for('static', filename='jquery-ui.js') }}"></script>
+
+<script>
+
+$(function() {
+$( "#book" ).autocomplete({
+source: "{{ url_for('library.search_book_api') }}",
+minLength: 3,
+});
+});
+
+$(function() {
+$( "#author" ).autocomplete({
+source: "{{ url_for('library.search_author_api') }}",
+minLength: 2,
+});
+});
+
+</script>
+
+{% endblock %}
+
+{% block content %}
+  <h2>Search</h2>
+  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+  <form id='1' action="{{ url_for('library.search') }}" method=post>
+    <dl>
+      <dt>Search Book:
+      <dd><input id="book" type=text name=book_title>
+      <dd><input type=submit value=Search>
+    </dl>
+  </form>
+
+  <form id='2' action="{{ url_for('library.search') }}" method=post>
+    <dl>
+      <dt>Search Author:
+      <dd><input id="author" type=text name=author_name>
+      <dd><input type=submit value=Search>
+    </dl>
+  </form>
+
+{% endblock %}

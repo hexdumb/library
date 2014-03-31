@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% import "helpers/forms.html" as forms %}
+{% block title %}My Library - {{title}}{% endblock %}
+{% block content %}
+{{ super() }}
+<form action="/add_author" method="POST">
+<fieldset>
+<legend>Add A Book</legend>
+{{ forms.render(form) }}
+<p><input type="Submit" value="Save Author"></p>
+</fieldset>
+</form>
+{% endblock content %}
